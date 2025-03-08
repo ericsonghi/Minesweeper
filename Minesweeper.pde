@@ -31,7 +31,7 @@ void draw() {
             buttons[i][j].draw();
 }
 public void setMines() {
-    while (mines.size() < 55) {
+    while (mines.size() < 1) {
         int row = (int) (Math.random() * NUM_ROWS);
         int col = (int) (Math.random() * NUM_COLS);
         MSButton button = buttons[row][col];
@@ -75,7 +75,7 @@ public class MSButton {
         Interactive.add(this);
     }
   public void mousePressed() {
-    if (gameOver || gameWon || clicked) return; // Prevent further interaction if game is over or already clicked
+    if (gameOver || gameWon || clicked) return;
     if (mouseButton == RIGHT) {
         flagged = !flagged;
         if (isWon()) gameWon = true;
