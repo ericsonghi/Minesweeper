@@ -74,29 +74,29 @@ public class MSButton {
         y = myRow * height;
         Interactive.add(this);
     }
-    public void mousePressed() {
-        if (gameOver || gameWon || flagged || clicked) return;
-        if (mouseButton == RIGHT) {
-            flagged = !flagged;
-            if (isWon()) gameWon = true;
-            return;
-        }
-        clicked = true;
-        if (mines.contains(this)) {
-            gameOver = true;
-            return;
-        }
-        int mineCount = countMines(myRow, myCol);
-        if (mineCount > 0) setLabel(mineCount);
-        else {
-            for (int i = myRow - 1; i <= myRow + 1; i++)
-                for (int j = myCol - 1; j <= myCol + 1; j++)
-                    if (isValid(i, j) && !buttons[i][j].clicked) {
-                        buttons[i][j].clicked = true;
-                        int neighborMines = countMines(i, j);
-                        if (neighborMines > 0) buttons[i][j].setLabel(neighborMines);
-                    }
-              }
+  public void mousePressed() {
+    if (gameOver || gameWon || clicked) return; // Prevent further interaction if game is over or already clicked
+    if (mouseButton == RIGHT) {
+        flagged = !flagged;
+        if (isWon()) gameWon = true;
+        return;
+    }
+    clicked = true;
+    if (mines.contains(this)) {
+        gameOver = true;
+        return;
+    }
+    int mineCount = countMines(myRow, myCol);
+    if (mineCount > 0) setLabel(mineCount);
+    else {
+        for (int i = myRow - 1; i <= myRow + 1; i++)
+            for (int j = myCol - 1; j <= myCol + 1; j++)
+                if (isValid(i, j) && !buttons[i][j].clicked) {
+                    buttons[i][j].clicked = true;
+                    int neighborMines = countMines(i, j);
+                    if (neighborMines > 0) buttons[i][j].setLabel(neighborMines);
+                }
+            }
         }
     public void draw() {
         if (flagged) fill(0, 0, 255);
